@@ -62,7 +62,7 @@ class _SizedPageViewState extends State<SizedPageView>
             alignment: Alignment.topCenter,
             child: SizeDetectorWidget(
               onSizeDetect: (size) {
-                if (mounted) {
+                if (mounted && _heights[index] != size.height) {
                   setState(() => _heights[index] = size.height);
                 }
               },

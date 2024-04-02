@@ -16,27 +16,26 @@ class SizeDetectorWidget extends StatefulWidget {
 }
 
 class _SizeDetectorWidgetState extends State<SizeDetectorWidget> {
-  Size? _oldSize;
+  void _listenSize() {
+    SchedulerBinding.instance.addPostFrameCallback((_) {
+      widget.onSizeDetect(context.size!);
+    });
+  }
 
   @override
   void initState() {
     super.initState();
-    SchedulerBinding.instance?.addPostFrameCallback((_) => _detectSize());
+    _listenSize();
   }
 
   @override
   Widget build(BuildContext context) {
-    return widget.child;
-  }
-
-  void _detectSize() {
-    if (!mounted) {
-      return;
-    }
-    final size = context.size;
-    if (_oldSize != size) {
-      _oldSize = size;
-      widget.onSizeDetect(size!);
-    }
+    return NotificationListener<SizeChangedLayoutNotification>(
+      onNotification: (_) {
+        _listenSize();
+        return false;
+      },
+      child: SizeChangedLayoutNotifier(child: widget.child),
+    );
   }
 }

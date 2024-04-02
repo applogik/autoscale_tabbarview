@@ -13,9 +13,7 @@ class AutoScaleTabBarView extends StatefulWidget {
     this.controller,
     this.physics,
     this.dragStartBehavior = DragStartBehavior.start,
-  })  : assert(children != null),
-        assert(dragStartBehavior != null),
-        super(key: key);
+  }) : super(key: key);
 
   /// This widget's selection and animation state.
   ///
